@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcc-ms-pedido-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcc-ms-pedido-service
+  template:
+    metadata:
+      labels:
+        app: tcc-ms-pedido-service
+    spec:
+      containers:
+        - name: tcc-ms-pedido-service
+          image: usp-ms-pedido-service:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: jdbc:postgresql://postgres-ms:5432/db-ms
+            - name: DATABASE_USER
+              value: postgres-ms
+            - name: DATABASE_PASSWORD
+              value: masterkey
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "1000m"
+              memory: "768Mi"
